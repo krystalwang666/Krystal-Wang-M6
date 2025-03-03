@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6 - Animations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        canvas { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <h2>Drawing and Animating the Outline of a Rectangle</h2>
+    <script>
+        let s1, interval;
+
+        function setup() {
+            createCanvas(400, 400);
+            s1 = { x: width / 4, y: height / 4, w: 50, h: 50, changeX: 50, changeY: 0 };
+            frameRate(10);
+        }
+
+        function draw() {
+            background(220);
+            drawOutline();
+            moveShape();
+            rect(s1.x, s1.y, s1.w, s1.h);
+        }
+
+        function drawOutline() {
+            stroke(255, 0, 0);
+            noFill();
+            rect(width / 4, height / 4, width / 2, height / 2);
+        }
+
+        function moveShape() {
+            if (s1.x >= width * 3 / 4 && s1.y === height / 4) {
+                s1.changeX = 0; s1.changeY = 50;
+            } else if (s1.y >= height * 3 / 4 && s1.x >= width * 3 / 4) {
+                s1.changeX = -50; s1.changeY = 0;
+            } else if (s1.x <= width / 4 && s1.y >= height * 3 / 4) {
+                s1.changeX = 0; s1.changeY = -50;
+            } else if (s1.y <= height / 4 && s1.x <= width / 4) {
+                s1.changeX = 50; s1.changeY = 0;
+            }
+
+            s1.x += s1.changeX;
+            s1.y += s1.changeY;
+        }
+    </script>
+
+    <h2>Random Motion</h2>
+    <script>
+        let obj = { x: 200, y: 200, changeX: random(-5, 5), changeY: random(-5, 5), size: 20 };
+
+        function setup2() {
+            createCanvas(400, 400);
+            frameRate(30);
+        }
+
+        function draw2() {
+            background(240);
+            ellipse(obj.x, obj.y, obj.size, obj.size);
+            obj.x += obj.changeX;
+            obj.y += obj.changeY;
+        }
+    </script>
+
+    <h2>Bounded Motion</h2>
+    <script>
+        let ball = { x: 200, y: 200, changeX: 3, changeY: 2, size: 20 };
+
+        function setup3() {
+            createCanvas(400, 400);
+            frameRate(30);
+        }
+
+        function draw3() {
+            background(240);
+            ellipse(ball.x, ball.y, ball.size, ball.size);
+            ball.x += ball.changeX;
+            ball.y += ball.changeY;
+
+            // Bounce logic
+            if (ball.x >= width || ball.x <= 0) ball.changeX *= -1;
+            if (ball.y >= height || ball.y <= 0) ball.changeY *= -1;
+        }
+    </script>
+</body>
+</html>
